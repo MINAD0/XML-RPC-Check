@@ -41,3 +41,6 @@ This repository contains a versatile Bash script for assessing web application s
    git clone https://github.com/MINAD0/XML-RPC-Check.git
    cd XML-RPC-Check
    chmod +x xmlrpc.sh
+
+   ### Wordlists
+   - [seclists] (https://github.com/danielmiessler/SecLists/tree/master)
