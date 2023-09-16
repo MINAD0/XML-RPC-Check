@@ -1,0 +1,116 @@
+{% extends 'base/basic.html' %}
+{% block title %}Restauration List{% endblock title %}
+{% block breadcrumb %}Restauration List{% endblock breadcrumb %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h5>Restauration List</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row">
+                                <form class="form-inline ml-3" action="" method="POST">
+                                    {% csrf_token %}
+                                    <div class="input-group input-group-sm">
+                                      <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search" aria-label="Search">
+                                      <div class="input-group-append">
+                                        <button class="btn btn-navbar" type="submit">
+                                          <i class="fas fa-search"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                <a class="btn" onclick="listView()"><i class="fa fa-bars"></i> List</a> 
+                                <a class="btn active" onclick="gridView()"><i class="fa fa-th-large"></i> Grid</a>
+                                <a class="btn btn-success" href="{% url 'create_restauration' %}">Create New Restauration</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                      <table class="table table-striped table-bordered datatable dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="border-collapse: collapse !important">
+                        <thead>
+                            <tr role="row">
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>contact</th>
+                                <th>service</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for restaurant in restaurants %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ restaurant.name }}</td>
+                                    <td>{{ restaurant.contact_info }}</td>
+                                    <td>{{ restaurant.services_offered }}</td>
+                                    
+                                    <td>
+                                        <a class="btn btn-info" href="" title="view">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-info" href="" title="edit">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger" href="" title="delete">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extrascript %}
+<script>
+    // Get the elements with class="column"
+    var elements = document.getElementsByClassName("table");
+    var myobj = document.getElementsByClassName("event_image");
+    // Declare a loop variable
+    var i;
+
+    // List View
+    function listView() {
+        for (i = 0; i < elements.length; i++) {
+
+            var appBanners = document.getElementsByClassName('event_image');
+
+            for (var i = 0; i < appBanners.length; i ++) {
+                appBanners[i].style.display = 'none';
+            }
+        }
+    }
+    
+    // Grid View
+    function gridView() {
+      for (i = 0; i < elements.length; i++) {
+        var appBanners = document.getElementsByClassName('event_image');
+
+        for (var i = 0; i < appBanners.length; i ++) {
+            appBanners[i].style.display = 'block';
+        }
+      }
+    }
+    
+    /* Optional: Add active class to the current button (highlight it) */
+    var container = document.getElementById("btnContainer");
+    var btns = container.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function() {
+        var current = document.getElementsByClassName("active");
+        current[0].className = current[0].className.replace(" active", "");
+        this.className += " active";
+      });
+    }
+    </script>
+{% endblock extrascript %}

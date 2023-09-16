@@ -1,0 +1,30 @@
+{% extends 'base/user_basic.html' %}
+{% block title %}Events{% endblock title %}
+{% block breadcrumb %}Events{% endblock breadcrumb %}
+
+
+
+{% block content %}
+
+<div class="container bg-light">
+    {% for event in events %}
+        <div class="card" style="width: 18rem;">
+            {% if event.image %}
+                <img src="{{ event.image.url }}" class="card-img-top" alt="image">
+            {% else %}
+                <img src="" class="card-img-top" alt="image none">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ event.event_type}}</h5>
+                <p class="card-text"> {{ event.location}} </p>
+                <p>{{ event.price}} dh</p>
+                <form method="post" action="{% url 'reserve_event' event.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Reserve</button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

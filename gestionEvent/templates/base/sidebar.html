@@ -1,0 +1,126 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link">
+          <span class="brand-text font-weight-light ml-4">Admin Panel</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          {% if request.user.userprofile.image %}
+            <img src="{{  request.user.userprofile.image.url }}" class="img-circle elevation-2" alt="User Image">
+          {% else %}
+            <img src="" class="img-circle elevation-2" alt="User Image">
+          {% endif %}
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">
+                {{ request.user.get_full_name|default:request.user.username }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+              with font-awesome or any other icon font library -->
+          
+          <li class="nav-item">
+            <a href="{% url "dashboard" %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-folder"></i>
+              <p>
+                Event Category
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url "create_event_category" %}" class="nav-link">
+                  <i class="far fa fa-edit nav-icon"></i>
+                  <p>Create Category</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa fa-list nav-icon"></i>
+                  <p>Category List</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-calendar"></i>
+              <p>
+                Events
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'create_event' %}" class="nav-link">
+                  <i class="far fa fa-edit nav-icon"></i>
+                  <p>Create Event</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'create_restauration' %}" class="nav-link">
+                  <i class="far fa fa-edit nav-icon"></i>
+                  <p>Create Restauration</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url 'event_list' %}" class="nav-link">
+                  <i class="far fa fa-list nav-icon"></i>
+                  <p>Event List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url "reservation" %}" class="nav-link">
+                  <i class="far fa fa-list nav-icon"></i>
+                  <p>Reservation List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url "restauration" %}" class="nav-link">
+                  <i class="far fa fa-list nav-icon"></i>
+                  <p>Restauration List</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{% url "user_list" %}" class="nav-link">
+                  <i class="far fa fa-list nav-icon"></i>
+                  <p>Users List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="far fa fa-list nav-icon"></i>
+                  <p>Factures List</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

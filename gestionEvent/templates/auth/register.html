@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Register</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include 'base/header.html' %}
+  <!-- Font Awesome -->
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+    <div class="container-md mt-5">     
+        <form method="POST" enctype="multipart/form-data"> 
+            {% csrf_token %}
+            <br>
+            <h1 class="text-center">User Registration</h1>
+        <div class="row mt-4">
+            <div class="form-group col-md-12">
+                <label><i style="font-weight: bold;">Username</i></label>
+                <input type="text" class="form-control mt-2" name="username" placeholder="Enter Username" required>
+            </div>
+        </div>
+    
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">First Name</i></label>
+                <input type="text" class="form-control mt-2" name="first_name" placeholder="Enter First Name" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Last Name</i></label>
+                <input type="text" class="form-control mt-2" name="last_name" placeholder="Enter Last Name" required>
+            </div>
+        </div>
+    
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Email</i></label>
+                <input type="email" class="form-control mt-2" name="email" placeholder="Enter Email" required>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Student Image</i></label>
+                <input type="file" class="form-control mt-2" name="image" required>
+            </div>
+        </div>
+    
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Password</i></label>
+                <input type="password" class="form-control mt-2" name="password" placeholder="Enter Password" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label><i style="font-weight: bold;">Confirm Password</i></label>
+                <input type="password" class="form-control mt-2" name="confirm_password" placeholder="Confirm Password" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary mt-4">Register</button>
+        <a class="btn btn-btn-success pt-4" href="{% url 'user_login' %}">connecte</a>
+    </div>
+    </form>
+    </div>
+{% include 'base/js.html' %}
+
+</body>
+</html>
+
+{% block js %}
+<script>
+    {% if alert %}
+    alert("User Created successfuly.")
+    document.location = "/login"
+    {% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base/basic.html' %}
+{% block title %}Profile{% endblock title %}
+{% block breadcrumb %}Welcome  {{ request.user.get_full_name|default:request.user.username }} {% endblock breadcrumb %}
+{% load crispy_forms_tags %}
+{% block headerTitle %}Admin Edit Profile{% endblock headerTitle %}
+{% block content %}
+<div class="container">
+    <form method="POST" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        <div class="row mt-4">
+            <div class="form-group col-md-6">
+                {{ profile_form|crispy }}
+                {{ image_form|crispy }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary mt-5">Update Profile</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,113 @@
+{% extends 'base/basic.html' %}
+{% block title %}Dashboard{% endblock title %}
+{% block breadcrumb %}Dashboard{% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-info">
+        <div class="inner">
+          {% if total_category_count %}
+            <h3>{{ total_category_count }}</h3>
+          {% else %}
+            <h3>0</h3>
+          {% endif %}
+
+          <p>Event Category</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div>
+        <a href="" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-success">
+        <div class="inner">
+          {% if total_event_count %}
+            <h3>{{ total_event_count }}</h3>
+          {% else %}
+            <h3>0</h3>
+          {% endif %}
+
+          <p>Events</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-stats-bars"></i>
+        </div>
+        <a href="" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-warning">
+        <div class="inner">
+          {% if user %}
+            <h3>{{ user }}</h3>
+          {% else %}
+            <h3>0</h3>
+          {% endif %}
+
+          <p>User Registrations</p>
+        </div>
+        <div class="icon">
+          <i class="ion ion-person-add"></i>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+  </div>
+  <!-- Event List -->
+  <div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>Event List</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                  <table class="table table-striped table-bordered datatable dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="border-collapse: collapse !important">
+                    <thead>
+                        <tr role="row">
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in events %}
+                          <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ event.event_type }}</td>
+                            <td>{{ event.date }}</td>
+                            <td>{{ event.location }}</td>
+                            <td>
+                                <a class="btn btn-info" href="" title="view">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a class="btn btn-info" href="{% url 'event_edit' event.id %}" title="edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger" href="{% url 'delete_event' event.id %}" title="delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                              </td>
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

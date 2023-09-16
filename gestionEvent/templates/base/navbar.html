@@ -1,0 +1,54 @@
+{% load static %}
+{% if request.user.is_superuser %}
+  <nav class="main-header navbar navbar-expand navbar-primary navbar-light">
+{% else %}
+  <nav class=" navbar navbar-expand navbar-primary navbar-light">
+{% endif %}
+
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      {% if request.user.is_superuser %}
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+      {% endif %}
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url "dashboard" %}" class="nav-link text-white">Accueil</a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
+            class="fas fa-th-large"></i></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fas fa-users"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <div class="dropdown-divider"></div>
+          {% if request.user.is_superuser %}
+            <a href="{% url "admin_profile" %}" class="dropdown-item dropdown-footer">
+              <i class="fas fa-user-circle m-2"></i>
+              Profile
+            </a>
+          {% else %}
+            <a href="{% url "profile" %}" class="dropdown-item dropdown-footer">
+              <i class="fas fa-user-circle m-2"></i>
+              Profile
+            </a>
+          {% endif %}
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-divider"></div>
+          <a href="{% url "user_logout" %}" class="dropdown-item dropdown-footer">
+            <i class="fas fa-sign-out-alt m-2"></i>
+            Logout
+          </a>
+        </div>
+      </li>
+    </ul>
+  </nav>

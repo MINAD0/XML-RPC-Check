@@ -1,0 +1,98 @@
+{% extends 'base/basic.html' %}
+{% block title %}Admin Profile{% endblock title %}
+{% block breadcrumb %}Welcome SuperUser {{ request.user.get_full_name|default:request.user.username }} {% endblock breadcrumb %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="profile-tab">
+        <div class="tab-pane">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>ID:</label>
+                </div>
+                <div class="col-md-6">
+                  <h5>{{ user.id }}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Username:</label>
+                </div>
+                <div class="col-md-6">
+                  <h5>{{ user }}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Full Name:</label>
+                </div>
+                <div class="col-md-6">
+                  <h5>{{ user.get_full_name }}</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Email:</label>
+                </div>
+                <div class="col-md-6">
+                    <h5>{{ user.email }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="my-4">
+          <a href="{% url "edit_admin_profile" %}" style="width: 9rem;" class="btn btn-outline-primary mt-3">Edit Profile</a>
+        </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Event List -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>List des Utilisateurs</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                  <table class="table table-striped table-bordered datatable dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info" style="border-collapse: collapse !important">
+                    <thead>
+                        <tr role="row">
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>email</th>
+                            <th>status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in events %}
+                          <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ event.event_type }}</td>
+                            <td>{{ event.date }}</td>
+                            <td>{{ event.location }}</td>
+                            <td>
+                                <a class="btn btn-info" href="" title="view">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a class="btn btn-info" href="{% url 'event_edit' event.id %}" title="edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger" href="{% url 'delete_event' event.id %}" title="delete">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                              </td>
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
