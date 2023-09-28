@@ -17,11 +17,13 @@ urlpatterns = [
     #EVENT
     path('create/', views.create_event, name='create_event'),
     path('events/delete/<int:event_id>/', views.delete_event, name='delete_event'),
+    path('reservation/delete/<int:reservation_id>/', views.delete_reservation, name='delete_reservation'),
     path('events/', views.event_list, name='event_list'),
     path('events/edit/<int:pk>/', EventUpdateView.as_view(), name='event_edit'),
     path('reservations/', views.reservation, name='reservation'),
     path('create_restauration/', views.create_restauration, name='create_restauration'),
     path('restaurations/', views.restauration, name='restauration'),
+    
     #CATEGORY
     path('create_category/', views.create_event_category, name='create_event_category'),
     path('events_category/', views.event_list_category, name='event_list_category'),

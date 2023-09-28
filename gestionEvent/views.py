@@ -28,7 +28,9 @@ def restauration(request):
 
 @login_required(login_url = 'user_login')
 def profile(request):
-    return render(request, "Client/profile.html")
+    user = request.user
+    reservations = Reservation.objects.filter(user=user)
+    return render(request, "Client/profile.html", {'reservations': reservations})
 
 @login_required(login_url='user_login')
 def admin_profile(request):
@@ -49,35 +51,35 @@ def dashboard(request):
 
 # @login_required(login_url='login')
 # def dashboard(request):
-    user = User.objects.count()
-    event_ctg = EventCategory.objects.count()
-    event = Event.objects.count()
-    complete_event = Event.objects.filter(status='completed').count()
-    events = Event.objects.all()
-    context = {
-        'user': user,
-        'event_ctg': event_ctg,
-        'event': event,
-        'complete_event': complete_event,
-        'events': events
-    }
-    return render(request, 'dashboard.html', context)
+    # user = User.objects.count()
+    # event_ctg = EventCategory.objects.count()
+    # event = Event.objects.count()
+    # complete_event = Event.objects.filter(status='completed').count()
+    # events = Event.objects.all()
+    # context = {
+    #     'user': user,
+    #     'event_ctg': event_ctg,
+    #     'event': event,
+    #     'complete_event': complete_event,
+    #     'events': events
+    # }
+    # return render(request, 'dashboard.html', context)
 
 @login_required(login_url='user_login')
 def reserve_event(request, event_id):
-    event = get_object_or_404(Event, pk=event_id)
-    if request.method == 'POST':
-        form = ReservationForm(request.POST)
-        if form.is_valid():
-            # Create a reservation record
-            reservation = form.save(commit=False)
-            reservation.event = event
-            reservation.user = request.user  # Assuming you have user authentication
-            reservation.save()
+    try:
+        event = Event.objects.get(pk=event_id)
+    except Event.DoesNotExist:
+        # Handle the case where the event does not exist
+        return HttpResponse("Event not found", status=404)
 
-            return redirect('/index')  # Redirect to a success page
-    else:
-        form = ReservationForm()
+    if request.method == "POST":
+
+        reservation = Reservation(user=request.user, event=event)
+        reservation.save()
+
+        # Redirect to a success page or show a message
+        return redirect('/index')  # Redirect to a success page
 
     return render(request, 'index.html', {'event': event})
 
@@ -113,6 +115,7 @@ def create_restauration(request):
     
     return render(request, 'events/create_restauration.html', {'form':form, 'restaurations':restaurations})
 
+@login_required(login_url='user_login')
 def delete_event(request, event_id):
     # Get the event object or return a 404 if it doesn't exist
     event = get_object_or_404(Event, id=event_id)
@@ -124,11 +127,24 @@ def delete_event(request, event_id):
     else:
         return redirect('/login')  # Redirect to the event catalog with a message or error
 
+
 class EventUpdateView(UpdateView):
     model = Event
     form_class = EventForm
     template_name = 'events/edit_event.html'
     success_url = '/events/'  # Redirect to the event list page after editing
+
+
+def delete_reservation(request, reservation_id):
+    # Get the event object or return a 404 if it doesn't exist
+    reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    # Check if the user is authorized to delete the event (you can customize this)
+    if request.user.is_authenticated:
+        reservation.delete()
+        return redirect('/profile/')  # Redirect to the event catalog or a success page
+    else:
+        return redirect('/login')  # Redirect to the event catalog with a message or error
 
 
 #all about categories 
@@ -246,7 +262,7 @@ def edit_profile(request):
         profile_form = CustomEditProfileForm(request.POST, instance=request.user)
         image_form = ImageUploadForm(request.POST, request.FILES)
 
-        if profile_form.is_valid() and image_form.is_valid():
+        if profile_form.is_valid() and image_form.is_valid() and password_form.is_valid():
             # Handle profile data update
             new_email = profile_form.cleaned_data.get("new_email")
             new_first_name = profile_form.cleaned_data.get("new_first_name")

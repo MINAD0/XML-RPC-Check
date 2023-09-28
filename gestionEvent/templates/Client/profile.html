@@ -42,6 +42,7 @@
         </div>
         <div class="my-4">
           <a href="{% url "edit_profile" %}" style="width: 9rem;" class="btn btn-outline-primary mt-3">Edit Profile</a>
+          <a href="{% url "change_password" %}" style="width: 9rem;" class="btn btn-outline-primary mt-3">Edit Password</a>
         </div>
     </div>
   </div>
@@ -70,20 +71,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for event in events %}
+                        {% for reservation in reservations %}
                           <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ event.event_type }}</td>
-                            <td>{{ event.date }}</td>
-                            <td>{{ event.location }}</td>
+                            <td>{{ reservation.event }}</td>
+                            <td>{{ reservation.event.category.name }}</td>
+                            <td>{{ reservation.reservation_date }}</td>
                             <td>
-                                <a class="btn btn-info" href="" title="view">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <a class="btn btn-info" href="{% url 'event_edit' event.id %}" title="edit">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                <a class="btn btn-danger" href="{% url 'delete_event' event.id %}" title="delete">
+                                <a class="btn btn-danger" href="{% url "delete_reservation" reservation.id %}" title="delete">
                                     <i class="fa fa-trash"></i>
                                 </a>
                               </td>

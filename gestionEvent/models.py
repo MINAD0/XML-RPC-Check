@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db import models
+from datetime import datetime
+
 
 # Create your models here.
 
@@ -51,7 +53,7 @@ class Event(models.Model):
 class Reservation(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)  # ForeignKey to Event model
     user = models.ForeignKey(User, on_delete=models.CASCADE)    # ForeignKey to User model
-    reservation_date = models.DateTimeField()  # Date and time when the reservation was made
+    reservation_date = models.DateTimeField(default=datetime.now)  # Date and time when the reservation was made
 
     # You can add more fields related to the reservation here, such as the number of seats, special requests, etc.
 

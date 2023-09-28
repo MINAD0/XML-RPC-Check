@@ -13,7 +13,11 @@
         </li>
       {% endif %}
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{% url "dashboard" %}" class="nav-link text-white">Accueil</a>
+        {% if request.user.is_superuser %}
+          <a href="{% url "dashboard" %}" class="nav-link text-white">Accueil</a>
+        {% else %}
+          <a href="{% url "index" %}" class="nav-link text-white">Accueil</a>
+        {% endif %}
       </li>
     </ul>
 

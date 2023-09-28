@@ -1,30 +1,45 @@
-{% extends 'base/user_basic.html' %}
-{% block title %}Events{% endblock title %}
-{% block breadcrumb %}Events{% endblock breadcrumb %}
+{% include 'base/header.html' %}
+{% load static %}
 
 
 
 {% block content %}
+<main>
+    {% include 'base/navbar.html' %}
 
-<div class="container bg-light">
-    {% for event in events %}
-        <div class="card" style="width: 18rem;">
-            {% if event.image %}
-                <img src="{{ event.image.url }}" class="card-img-top" alt="image">
-            {% else %}
-                <img src="" class="card-img-top" alt="image none">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ event.event_type}}</h5>
-                <p class="card-text"> {{ event.location}} </p>
-                <p>{{ event.price}} dh</p>
-                <form method="post" action="{% url 'reserve_event' event.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Reserve</button>
-                </form>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for event in events %}
+                <div class="col">
+                        <div class="card shadow-sm">
+                            {% if event.image %}
+                                <img src="{{ event.image.url }}" class="card-img-top" alt="image" width="100" height="150">
+                            {% else %}
+                                <img src="" class="card-img-top" alt="image none">
+                            {% endif %}        
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.event_type}}</h5>
+                            <p class="card-text">{{ event.location}}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <form method="post" action="{% url 'reserve_event' event.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Reserve</button>
+                                </form>
+                            </div>
+                                <small class="text-muted">9 mins</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
-    {% endfor %}
-</div>
+    </div>
+
+</main>
 
 {% endblock content %}
+
+{% include 'base/js.html' %}
