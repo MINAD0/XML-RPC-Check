@@ -49,6 +49,39 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
+@login_required(login_url='login')
+def search_event_category(request):
+    if request.method == 'POST':
+        data = request.POST['search']
+        category = Category.objects.filter(name__icontains=data)
+        context = {
+            'category': category
+        }
+        return render(request, 'events/event_list_category.html', context)
+    return render(request, 'events/event_list_category.html')
+
+@login_required(login_url='login')
+def search_event(request):
+    if request.method == 'POST':
+       data = request.POST['search']
+       events = Event.objects.filter(event_type=data)
+       context = {
+            'events': events
+       }
+       return render(request, 'events/event_list.html', context)
+    return render(request, 'events/event_list.html')
+
+@login_required(login_url='login')
+def search_user(request):
+    if request.method == 'POST':
+       data = request.POST['search']
+       users = User.objects.filter(username=data)
+       context = {
+            'users': users
+       }
+       return render(request, 'events/users_list.html', context)
+    return render(request, 'events/users_list.html')
+
 # @login_required(login_url='login')
 # def dashboard(request):
     # user = User.objects.count()
@@ -199,16 +232,6 @@ def delete_user(request, user_id):
     else:
         return redirect('/login')  # Redirect to the event catalog with a message or error
 
-@login_required(login_url='user_login')
-def search_event_category(request):
-    if request.method == 'POST':
-        data = request.POST['search']
-        event_category = Category.objects.filter(name__icontains=data)
-        context = {
-        'event_category': event_category
-    }
-        return render(request, 'events/event_category.html', context)
-    return render(request, 'events/event_category.html')
 
 #Auth Functions 
 def user_register(request):

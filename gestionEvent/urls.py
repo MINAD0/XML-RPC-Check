@@ -23,12 +23,15 @@ urlpatterns = [
     path('reservations/', views.reservation, name='reservation'),
     path('create_restauration/', views.create_restauration, name='create_restauration'),
     path('restaurations/', views.restauration, name='restauration'),
+    path('search_event/', views.search_event, name='search-event'),
+    path('search_user/', views.search_user, name='search-user'),
     
     #CATEGORY
     path('create_category/', views.create_event_category, name='create_event_category'),
     path('events_category/', views.event_list_category, name='event_list_category'),
     path('events_category/delete/<int:category_id>/', views.delete_event_category, name='delete_event_category'),
     path('events_category/edit/<int:pk>/', CategoryUpdateView.as_view(), name='edit_event_category'),
+    path('search_category/', views.search_event_category, name='search-event-category'),
     #Auth Links
     path('login/', views.user_login, name='user_login'),
     path('register/', views.user_register, name='user_register'),

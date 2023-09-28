@@ -13,7 +13,7 @@
                         </div>
                         <div class="col-md-7">
                             <div class="row">
-                                <form class="form-inline ml-3" action="" method="POST">
+                                <form class="form-inline ml-3" action="{% url 'search-user' %}" method="POST">
                                     {% csrf_token %}
                                     <div class="input-group input-group-sm">
                                       <input class="form-control form-control-navbar" name="search" type="search" placeholder="Search" aria-label="Search">
